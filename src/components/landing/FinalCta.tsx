@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { Link } from "@tanstack/react-router";
 
 export function FinalCta() {
   return (
@@ -17,8 +18,8 @@ export function FinalCta() {
               <p className="mx-auto mt-5 max-w-lg text-muted-foreground md:text-lg">
                 Comece a transformar pesquisas em oportunidades comerciais.
               </p>
-              <a
-                href="#top"
+              <Link
+                to="/register"
                 className="btn-glow mt-9 inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground md:text-base"
               >
                 Começar agora
