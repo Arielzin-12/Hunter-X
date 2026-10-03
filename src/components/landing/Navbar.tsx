@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Crosshair, Menu, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const links = [
   { label: "Produto", href: "#produto" },
@@ -26,9 +27,9 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <a href="#top" aria-label="HunterX — início">
+        <Link to="/" aria-label="HunterX — início">
           <Logo />
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
@@ -43,18 +44,18 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="#top"
+          <Link
+            to="/login"
             className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Entrar
-          </a>
-          <a
-            href="#cta"
+          </Link>
+          <Link
+            to="/register"
             className="btn-glow rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
           >
             Começar agora
-          </a>
+          </Link>
         </div>
 
         <button
@@ -81,20 +82,20 @@ export function Navbar() {
             ))}
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            <a
-              href="#top"
+            <Link
+              to="/login"
               onClick={() => setOpen(false)}
               className="rounded-lg border border-border px-4 py-2.5 text-center text-sm font-medium"
             >
               Entrar
-            </a>
-            <a
-              href="#cta"
+            </Link>
+            <Link
+              to="/register"
               onClick={() => setOpen(false)}
               className="rounded-lg bg-primary px-4 py-2.5 text-center text-sm font-semibold text-primary-foreground"
             >
               Começar agora
-            </a>
+            </Link>
           </div>
         </div>
       )}
