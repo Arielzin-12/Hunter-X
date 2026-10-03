@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight, Bot, Search, Sparkles, TrendingUp } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { Link } from "@tanstack/react-router";
 
 const kpis = [
   { label: "Leads encontrados", value: "1.284", delta: "+12%" },
@@ -46,13 +47,13 @@ export function Hero() {
 
             <Reveal delay={0.24}>
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a
-                  href="#cta"
+                <Link
+                  to="/register"
                   className="btn-glow inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
                 >
                   Começar agora
                   <ArrowRight className="size-4" />
-                </a>
+                </Link>
                 <a
                   href="#produto"
                   className="inline-flex items-center gap-2 rounded-lg border border-border bg-card/60 px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
