@@ -5,6 +5,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as SearchRouteImport } from './routes/app.leads.search'
 import { Route as LeadsRouteImport } from './routes/app.leads'
+import { Route as LeadDetailRouteImport } from './routes/app.leads.$leadId'
 import { Route as CrmRouteImport } from './routes/app.crm'
 import { Route as MapRouteImport } from './routes/app.map'
 import { Route as ListsRouteImport } from './routes/app.lists'
@@ -21,6 +22,7 @@ const IndexRoute=mk(IndexRouteImport,'/','/')
 const AppRoute=mk(AppRouteImport,'/app','/app')
 const SearchRoute=mk(SearchRouteImport,'/app/leads/search','/app/leads/search')
 const LeadsRoute=mk(LeadsRouteImport,'/app/leads','/app/leads')
+const LeadDetailRoute=mk(LeadDetailRouteImport,'/app/leads/$leadId','/app/leads/$leadId')
 const CrmRoute=mk(CrmRouteImport,'/app/crm','/app/crm')
 const MapRoute=mk(MapRouteImport,'/app/map','/app/map')
 const ListsRoute=mk(ListsRouteImport,'/app/lists','/app/lists')
@@ -36,8 +38,8 @@ export interface FileRoutesByFullPath{[key:string]:any}
 export interface FileRoutesByTo{[key:string]:any}
 export interface FileRoutesById{__root__:typeof rootRouteImport}
 export interface FileRouteTypes{fileRoutesByFullPath:FileRoutesByFullPath;fullPaths:string;fileRoutesByTo:FileRoutesByTo;to:string;id:'__root__';fileRoutesById:FileRoutesById}
-export interface RootRouteChildren{IndexRoute:typeof IndexRoute;AppRoute:typeof AppRoute;SearchRoute:typeof SearchRoute;LeadsRoute:typeof LeadsRoute;CrmRoute:typeof CrmRoute;MapRoute:typeof MapRoute;ListsRoute:typeof ListsRoute;CampaignsRoute:typeof CampaignsRoute;AnalyticsRoute:typeof AnalyticsRoute;AiRoute:typeof AiRoute;ExportsRoute:typeof ExportsRoute;SettingsRoute:typeof SettingsRoute;ProfileRoute:typeof ProfileRoute;LoginRoute:typeof LoginRoute;RegisterRoute:typeof RegisterRoute}
-const rootRouteChildren:RootRouteChildren={IndexRoute,AppRoute,SearchRoute,LeadsRoute,CrmRoute,MapRoute,ListsRoute,CampaignsRoute,AnalyticsRoute,AiRoute,ExportsRoute,SettingsRoute,ProfileRoute,LoginRoute,RegisterRoute}
+export interface RootRouteChildren{IndexRoute:typeof IndexRoute;AppRoute:typeof AppRoute;SearchRoute:typeof SearchRoute;LeadsRoute:typeof LeadsRoute;LeadDetailRoute:typeof LeadDetailRoute;CrmRoute:typeof CrmRoute;MapRoute:typeof MapRoute;ListsRoute:typeof ListsRoute;CampaignsRoute:typeof CampaignsRoute;AnalyticsRoute:typeof AnalyticsRoute;AiRoute:typeof AiRoute;ExportsRoute:typeof ExportsRoute;SettingsRoute:typeof SettingsRoute;ProfileRoute:typeof ProfileRoute;LoginRoute:typeof LoginRoute;RegisterRoute:typeof RegisterRoute}
+const rootRouteChildren:RootRouteChildren={IndexRoute,AppRoute,SearchRoute,LeadsRoute,LeadDetailRoute,CrmRoute,MapRoute,ListsRoute,CampaignsRoute,AnalyticsRoute,AiRoute,ExportsRoute,SettingsRoute,ProfileRoute,LoginRoute,RegisterRoute}
 export const routeTree=rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
