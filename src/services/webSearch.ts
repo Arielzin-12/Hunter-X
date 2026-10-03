@@ -1,0 +1,9 @@
+import { getSession } from "@/lib/auth";
+import { supabaseConfigured } from "@/lib/supabase";
+const base = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+export type WebLead = { id:string; name:string; website?:string|null; description:string; source:string; source_url?:string|null; query:string; location:string };
+export type WeeklyQuota = { plan:string; weekly_limit:number; used:number; remaining:number; week_start:string };
+async function rpc<T>(name:string):Promise<T>{ const s=getSession(); if(!base||!anon||!s?.access_token) throw new Error("Faça login para continuar."); const r=await fetch(base+"/rest/v1/rpc/"+name,{method:"POST",headers:{apikey:anon,Authorization:"Bearer "+s.access_token,"Content-Type":"application/json"},body:"{}"}); const data=await r.json(); if(!r.ok) throw new Error("Não foi possível consultar sua cota."); return (Array.isArray(data)?data[0]:data) as T; }
+export async function getWeeklyQuota(){ if(!supabaseConfigured) throw new Error("Configure o Supabase."); return rpc<WeeklyQuota>("get_weekly_search_quota"); }
+export async function searchWeb(query:string,location:string){ if(!supabaseConfigured||!base||!anon) throw new Error("Configure o Supabase antes de pesquisar."); const s=getSession(); if(!s?.access_token) throw new Error("Faça login para pesquisar."); const r=await fetch(base+"/functions/v1/web-search",{method:"POST",headers:{apikey:anon,Authorization:"Bearer "+s.access_token,"Content-Type":"application/json"},body:JSON.stringify({query,location})}); const data=await r.json(); if(!r.ok) throw new Error(data.error||"Não foi possível pesquisar na web."); return data as {leads:WebLead[];count:number;quota:WeeklyQuota}; }
