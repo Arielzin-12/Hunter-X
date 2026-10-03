@@ -1,0 +1,24 @@
+const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+
+export const supabaseConfigured = Boolean(url && anonKey);
+
+export async function supabaseFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
+  if (!url || !anonKey) throw new Error("Supabase não configurado.");
+  const headers = new Headers(init.headers);
+  headers.set("apikey", anonKey);
+  headers.set("Content-Type", "application/json");
+  const response = await fetch(`${url}/rest/v1/${path}`, { ...init, headers });
+  if (!response.ok) throw new Error(await response.text());
+  if (response.status === 204) return undefined as T;
+  return response.json() as Promise<T>;
+}
+
+export async function supabaseAuth(path: string, body?: unknown, accessToken?: string) {
+  if (!url || !anonKey) throw new Error("Supabase não configurado.");
+  const headers = new Headers({ apikey: anonKey, "Content-Type": "application/json" });
+  if (accessToken) headers.set("Authorization", `Bearer ${accessToken}`);
+  const response = await fetch(`${url}/auth/v1/${path}`, { method: "POST", headers, body: body ? JSON.stringify(body) : undefined });
+  if (!response.ok) throw new Error(await response.text());
+  return response.json();
+}
