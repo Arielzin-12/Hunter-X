@@ -1,28 +1,7 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Search, Map, Kanban, List, BarChart3, Sparkles, Download, Settings, UserRound, Bell, Zap, ChevronRight } from "lucide-react";
+import { Link,useLocation } from "@tanstack/react-router";
+import { LayoutDashboard,Search,Map,Kanban,List,BarChart3,Sparkles,Download,Settings,UserRound,Bell,Zap,ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
-
-const nav = [
-  ["Dashboard","/app",LayoutDashboard],["Encontrar Leads","/app/leads/search",Search],["Meus Leads","/app/leads",List],
-  ["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],
-  ["Analytics","/app/analytics",BarChart3],["LeadHunter AI","/app/ai",Sparkles],["Exportações","/app/exports",Download],
-] as const;
-
-export function AppShell({children}:{children:ReactNode}) {
-  const location=useLocation();
-  return <div className="min-h-screen bg-[#07080d] text-white">
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-white/8 bg-[#0a0b11]/95 px-3 py-5 lg:block">
-      <Link to="/" className="mb-8 flex items-center gap-3 px-3"><div className="grid size-9 place-items-center rounded-xl bg-white text-black shadow-lg shadow-white/10"><Zap size={19} fill="currentColor"/></div><div><div className="font-bold tracking-tight">HunterX</div><div className="text-[10px] uppercase tracking-[.18em] text-white/35">Sales intelligence</div></div></Link>
-      <div className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[.18em] text-white/30">Workspace</div>
-      <nav className="space-y-1">{nav.map(([label,to,Icon])=><Link key={to} to={to} className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${location.pathname===to ? "bg-white text-black shadow-lg shadow-white/5":"text-white/55 hover:bg-white/5 hover:text-white"}`}><Icon size={17}/><span>{label}</span>{location.pathname===to&&<ChevronRight className="ml-auto" size={14}/>}</Link>)}</nav>
-      <div className="absolute bottom-5 left-3 right-3 rounded-2xl border border-white/8 bg-gradient-to-br from-white/[.07] to-white/[.02] p-4"><div className="mb-2 flex items-center gap-2 text-xs font-semibold"><Zap size={14}/> Créditos</div><div className="text-2xl font-bold">0</div><div className="mt-1 text-[11px] text-white/40">Configure o Supabase para ativar o saldo.</div></div>
-    </aside>
-    <main className="lg:pl-64">
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/8 bg-[#07080d]/85 px-4 backdrop-blur-xl sm:px-7">
-        <div className="flex items-center gap-2 text-sm text-white/40">Workspace <ChevronRight size={14}/><span className="text-white/80">HunterX</span></div>
-        <div className="flex items-center gap-2"><button className="grid size-9 place-items-center rounded-xl border border-white/8 text-white/55 hover:bg-white/5"><Bell size={17}/></button><Link to="/app/settings" className="grid size-9 place-items-center rounded-xl border border-white/8 text-white/55 hover:bg-white/5"><Settings size={17}/></Link><div className="grid size-9 place-items-center rounded-xl bg-white/10 text-sm font-semibold">HX</div></div>
-      </header>
-      <div className="p-4 sm:p-7">{children}</div>
-    </main>
-  </div>;
-}
+import { useEffect,useState } from "react";
+import { getCreditBalance,unreadNotifications } from "@/services/appData";
+const nav=[["Dashboard","/app",LayoutDashboard],["Encontrar Leads","/app/leads/search",Search],["Meus Leads","/app/leads",List],["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],["Analytics","/app/analytics",BarChart3],["LeadHunter AI","/app/ai",Sparkles],["Exportações","/app/exports",Download]] as const;
+export function AppShell({children}:{children:ReactNode}){const location=useLocation();const[credits,setCredits]=useState<number|null>(null);const[notifications,setNotifications]=useState<any[]>([]);useEffect(()=>{getCreditBalance().then(setCredits).catch(()=>setCredits(null));unreadNotifications().then(setNotifications).catch(()=>setNotifications([]))},[]);return <div className="min-h-screen bg-[#07080d] text-white"><aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-white/8 bg-[#0a0b11]/95 px-3 py-5 lg:block"><Link to="/" className="mb-8 flex items-center gap-3 px-3"><div className="grid size-9 place-items-center rounded-xl bg-white text-black shadow-lg shadow-white/10"><Zap size={19} fill="currentColor"/></div><div><div className="font-bold tracking-tight">HunterX</div><div className="text-[10px] uppercase tracking-[.18em] text-white/35">Sales intelligence</div></div></Link><div className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[.18em] text-white/30">Workspace</div><nav className="space-y-1">{nav.map(([label,to,Icon])=><Link key={to} to={to} className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${location.pathname===to?"bg-white text-black shadow-lg shadow-white/5":"text-white/55 hover:bg-white/5 hover:text-white"}`}><Icon size={17}/><span>{label}</span>{location.pathname===to&&<ChevronRight className="ml-auto" size={14}/>}</Link>)}</nav><div className="absolute bottom-5 left-3 right-3 rounded-2xl border border-white/8 bg-gradient-to-br from-white/[.07] to-white/[.02] p-4"><div className="mb-2 flex items-center gap-2 text-xs font-semibold"><Zap size={14}/> Créditos</div><div className="text-2xl font-bold">{credits===null?"—":credits}</div><div className="mt-1 text-[11px] text-white/40">Saldo disponível para sua conta.</div></div></aside><main className="lg:pl-64"><header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/8 bg-[#07080d]/85 px-4 backdrop-blur-xl sm:px-7"><div className="flex items-center gap-2 text-sm text-white/40">Workspace <ChevronRight size={14}/><span className="text-white/80">HunterX</span></div><div className="flex items-center gap-2"><button title={notifications.length?notifications.length+" notificações":"Sem novas notificações"} className="relative grid size-9 place-items-center rounded-xl border border-white/8 text-white/55 hover:bg-white/5"><Bell size={17}/>{notifications.length>0&&<span className="absolute right-1 top-1 size-2 rounded-full bg-white"/>}</button><Link to="/app/profile" className="grid size-9 place-items-center rounded-xl border border-white/8 text-white/55 hover:bg-white/5"><UserRound size={17}/></Link><Link to="/app/settings" className="grid size-9 place-items-center rounded-xl border border-white/8 text-white/55 hover:bg-white/5"><Settings size={17}/></Link><div className="grid size-9 place-items-center rounded-xl bg-white/10 text-sm font-semibold">HX</div></div></header><div className="p-4 sm:p-7">{children}</div></main></div>}
