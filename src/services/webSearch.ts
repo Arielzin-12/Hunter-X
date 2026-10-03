@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
-import { supabaseConfigured } from "@/lib/supabase";
-const base = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+import { supabaseConfigured, getSupabaseUrl, getSupabaseAnonKey } from "@/lib/supabase";
+const base = getSupabaseUrl();
+const anon = getSupabaseAnonKey();
 export type WebLead = { id:string; name:string; website?:string|null; description:string; source:string; source_url?:string|null; query:string; location:string };
 export type WeeklyQuota = { plan:string; weekly_limit:number; used:number; remaining:number; week_start:string };
 async function rpc<T>(name:string):Promise<T>{ const s=getSession(); if(!base||!anon||!s?.access_token) throw new Error("Faça login para continuar."); const r=await fetch(base+"/rest/v1/rpc/"+name,{method:"POST",headers:{apikey:anon,Authorization:"Bearer "+s.access_token,"Content-Type":"application/json"},body:"{}"}); const data=await r.json(); if(!r.ok) throw new Error("Não foi possível consultar sua cota."); return (Array.isArray(data)?data[0]:data) as T; }
