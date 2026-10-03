@@ -15,7 +15,8 @@ export async function listLists(){const id=uid();if(!id)return [];return supabas
 export async function getList(id:string){const me=uid();if(!me)throw new Error("Faça login.");const r=await supabaseFetch<any[]>("lists?id=eq."+enc(id)+"&user_id=eq."+enc(me)+"&limit=1");return r[0]||null}
 export async function addLeadToList(listId:string,leadId:string){await getList(listId);await getLead(leadId);return supabaseFetch("list_leads",{method:"POST",headers:{"Prefer":"resolution=ignore-duplicates"},body:JSON.stringify({list_id:listId,lead_id:leadId})})}
 export async function removeLeadFromList(listId:string,leadId:string){await getList(listId);return supabaseFetch("list_leads?list_id=eq."+enc(listId)+"&lead_id=eq."+enc(leadId),{method:"DELETE"})}
-export async function listListLeads(listId:string){await getList(listId);return supabaseFetch<LeadRow[]>("leads?select=*&id=in.("+encodeURIComponent("select lead_id from list_leads where list_id = '"+listId+"'")+")&order=created_at.desc")}
+export async function listListLeads(listId:string){await getList(listId);const links=await supabaseFetch<any[]>("list_leads?list_id=eq."+enc(listId)+"&select=lead_id");if(!links.length)return [];const ids=links.map(x=>x.lead_id).join(",");return supabaseFetch<LeadRow[]>("leads?id=in.("+enc(ids)+")&order=created_at.desc")}
+
 export async function deleteList(id:string){await getList(id);return supabaseFetch("lists?id=eq."+enc(id),{method:"DELETE"})}
 export async function listTags(){const id=uid();if(!id)return [];return supabaseFetch<any[]>("tags?user_id=eq."+enc(id)+"&order=name.asc")}
 export async function createTag(name:string,color=""){const id=uid();if(!id)throw new Error("Faça login.");const r=await supabaseFetch<any[]>("tags",{method:"POST",headers:{"Prefer":"return=representation","Content-Type":"application/json"},body:JSON.stringify({user_id:id,name:name.trim(),color:color||null})});return r[0]}
