@@ -1,10 +1,10 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, Search, Map, Kanban, List, Megaphone, BarChart3, Sparkles, Download, Settings, UserRound, Bell, Zap, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Search, Map, Kanban, List, BarChart3, Sparkles, Download, Settings, UserRound, Bell, Zap, ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 const nav = [
   ["Dashboard","/app",LayoutDashboard],["Encontrar Leads","/app/leads/search",Search],["Meus Leads","/app/leads",List],
-  ["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],["Campanhas","/app/campaigns",Megaphone],
+  ["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],
   ["Analytics","/app/analytics",BarChart3],["LeadHunter AI","/app/ai",Sparkles],["Exportações","/app/exports",Download],
 ] as const;
 
