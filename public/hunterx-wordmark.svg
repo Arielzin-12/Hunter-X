@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 150" role="img" aria-label="HunterX">
+<defs><filter id="g"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g fill="#b7ff00" filter="url(#g)">
+<text x="18" y="104" font-family="Arial Black,Arial,sans-serif" font-size="91" font-weight="900" font-style="italic" letter-spacing="-7">Hunter</text>
+<text x="425" y="112" font-family="Arial Black,Arial,sans-serif" font-size="112" font-weight="900" font-style="italic">X</text>
+<path d="M55 119 H455 M455 119 L520 83" fill="none" stroke="#b7ff00" stroke-width="5" stroke-linecap="round"/>
+<circle cx="305" cy="119" r="18" fill="none" stroke="#b7ff00" stroke-width="4"/>
+<path d="M305 101v36M296 110h18" stroke="#b7ff00" stroke-width="4" stroke-linecap="round"/>
+</g></svg>
