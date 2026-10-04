@@ -1,9 +1,9 @@
 import { Link,useLocation } from "@tanstack/react-router";
-import { LayoutDashboard,Search,Map,Kanban,List,BarChart3,Download,Settings,UserRound,Bell,ChevronRight,Menu,X } from "lucide-react";
+import { LayoutDashboard,Search,Map,Kanban,List,BarChart3,Download,Settings,UserRound,Bell,ChevronRight,Menu,X,LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect,useState } from "react";
 import { getCreditBalance,unreadNotifications } from "@/services/appData";
-import { getSession } from "@/lib/auth";
+import { getSession,clearSession } from "@/lib/auth";
 
 const nav=[["Dashboard","/app",LayoutDashboard],["Encontrar Leads","/app/leads/search",Search],["Meus Leads","/app/leads",List],["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],["Analytics","/app/analytics",BarChart3],["Exportações","/app/exports",Download]] as const;
 
@@ -12,5 +12,5 @@ return <div className="min-h-screen bg-[#07080d] text-white">
 <div onClick={()=>setOpen(false)} className={`fixed inset-0 z-30 bg-black/60 backdrop-blur-[1px] transition-opacity lg:hidden ${open?"opacity-100":"pointer-events-none opacity-0"}`} aria-hidden="true" />
 <aside className={`fixed inset-y-0 left-0 z-40 w-64 border-r border-white/8 bg-[#0a0b11]/95 px-3 py-5 transition-transform lg:translate-x-0 ${open?"translate-x-0":"-translate-x-full"} lg:block`}>
 <Link to="/" className="mb-8 flex items-center px-3"><img src="/hunterx-wordmark.svg" alt="HunterX" className="h-10 w-auto object-contain" /></Link>
-<nav className="space-y-1">{nav.map(([label,to,Icon])=><Link onClick={()=>setOpen(false)} key={to} to={to} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${location.pathname===to?"bg-white text-black":"text-white/55 hover:bg-white/5"}`}><Icon size={17}/><span>{label}</span></Link>)}</nav></aside>
+<nav className="space-y-1">{nav.map(([label,to,Icon])=><Link onClick={()=>setOpen(false)} key={to} to={to} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${location.pathname===to?"bg-white text-black":"text-white/55 hover:bg-white/5"}`}><Icon size={17}/><span>{label}</span></Link>)}</nav><button type="button" onClick={()=>{clearSession();window.location.href="/login";}} className="mt-4 flex w-full items-center gap-3 rounded-xl border border-white/8 px-3 py-2.5 text-sm text-red-300/80 hover:bg-red-400/10 hover:text-red-200"><LogOut size={17}/><span>Sair da conta</span></button></aside>
 <main className="lg:pl-64"><header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/8 bg-[#07080d]/85 px-4 backdrop-blur-xl sm:px-7"><button type="button" aria-label={open?"Fechar menu":"Abrir menu"} aria-expanded={open} className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[.03] text-white lg:hidden" onClick={()=>setOpen(!open)}>{open?<X size={20}/>:<Menu size={20}/>}</button><div className="text-sm text-white/40">Workspace <ChevronRight size={14} className="inline"/> <span className="text-white/80">HunterX</span></div><div className="flex items-center gap-2"><button className="relative grid size-9 place-items-center rounded-xl border border-white/8"><Bell size={17}/>{notifications.length>0&&<span className="absolute right-1 top-1 size-2 rounded-full bg-white"/>}</button><Link to="/app/profile" className="grid size-9 place-items-center rounded-xl border border-white/8"><UserRound size={17}/></Link><Link to="/app/settings" className="grid size-9 place-items-center rounded-xl border border-white/8"><Settings size={17}/></Link></div></header><div className="p-4 sm:p-7">{children}</div></main></div>}
