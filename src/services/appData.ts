@@ -34,3 +34,6 @@ export async function updateProfile(p:{name?:string;company_name?:string;phone?:
 export async function listCampaigns(){const id=uid();if(!id)return [];return supabaseFetch<any[]>("campaigns?user_id=eq."+enc(id)+"&order=created_at.desc")}
 export async function createCampaign(name:string,description=""){const id=uid();if(!id)throw new Error("Faça login.");const r=await supabaseFetch<any[]>("campaigns",{method:"POST",headers:{"Prefer":"return=representation"},body:JSON.stringify({user_id:id,name:name.trim(),description})});return r[0]}
 export async function getCreditBalance(){const id=uid();if(!id)return 0;const r=await supabaseFetch<any[]>("credit_balances?user_id=eq."+enc(id)+"&limit=1");return r[0]?.balance??0}
+
+export type SearchCreditStatus={plan:"free"|"pro"|"max";weekly_limit:number;remaining:number;result_limit:number;week_start:string};
+export async function getSearchCreditStatus(){const id=uid();if(!id)throw new Error("Faça login.");const rows=await supabaseFetch<SearchCreditStatus[]>("rpc/get_search_credit_status",{method:"POST",body:"{}"});return rows[0]||null}
