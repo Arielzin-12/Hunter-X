@@ -44,14 +44,9 @@ function SearchPage() {
     setLoading(true);
     try {
       const d = await searchGooglePlaces(q, l);
-      setResults(d.leads || []);
-      setCredit({
-        plan: d.credit.plan,
-        weekly_limit: d.credit.weekly_limit,
-        remaining: d.credit.remaining,
-        result_limit: d.credit.result_limit,
-        week_start: credit?.week_start || "",
-      });
+      setResults(d);
+      const status = await getSearchCreditStatus();
+      setCredit(status);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Falha na pesquisa.");
       getSearchCreditStatus().then(setCredit).catch(() => {});
