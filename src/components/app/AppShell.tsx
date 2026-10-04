@@ -3,10 +3,11 @@ import { LayoutDashboard,Search,Map,Kanban,List,BarChart3,Download,Settings,User
 import type { ReactNode } from "react";
 import { useEffect,useState } from "react";
 import { getCreditBalance,unreadNotifications } from "@/services/appData";
+import { getSession } from "@/lib/auth";
 
 const nav=[["Dashboard","/app",LayoutDashboard],["Encontrar Leads","/app/leads/search",Search],["Meus Leads","/app/leads",List],["Mapa","/app/map",Map],["CRM","/app/crm",Kanban],["Listas","/app/lists",List],["Analytics","/app/analytics",BarChart3],["Exportações","/app/exports",Download]] as const;
 
-export function AppShell({children}:{children:ReactNode}){const location=useLocation();const[credits,setCredits]=useState<number|null>(null);const[notifications,setNotifications]=useState<any[]>([]);const[open,setOpen]=useState(false);useEffect(()=>{getCreditBalance().then(setCredits).catch(()=>setCredits(null));unreadNotifications().then(setNotifications).catch(()=>setNotifications([]))},[]);
+export function AppShell({children}:{children:ReactNode}){const location=useLocation();const[credits,setCredits]=useState<number|null>(null);const[notifications,setNotifications]=useState<any[]>([]);const[open,setOpen]=useState(false);useEffect(()=>{if(!getSession()?.access_token){window.location.href="/login";return;}getCreditBalance().then(setCredits).catch(()=>setCredits(null));unreadNotifications().then(setNotifications).catch(()=>setNotifications([]))},[]);
 return <div className="min-h-screen bg-[#07080d] text-white">
 <aside className={`fixed inset-y-0 left-0 z-40 w-64 border-r border-white/8 bg-[#0a0b11]/95 px-3 py-5 transition-transform lg:translate-x-0 ${open?"translate-x-0":"-translate-x-full"} lg:block`}>
 <Link to="/" className="mb-8 flex items-center gap-3 px-3"><div className="grid size-9 place-items-center rounded-xl bg-white text-black"><Zap size={19} fill="currentColor"/></div><div><div className="font-bold">HunterX</div><div className="text-[10px] uppercase text-white/35">Sales intelligence</div></div></Link>
