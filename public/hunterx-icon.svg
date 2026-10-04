@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="HunterX">
+<defs><radialGradient id="bg"><stop stop-color="#0a4b00"/><stop offset=".7" stop-color="#003300"/><stop offset="1" stop-color="#001b00"/></radialGradient><filter id="g"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="256" height="256" rx="26" fill="url(#bg)"/>
+<g fill="none" stroke="#b7ff00" stroke-linecap="round" stroke-linejoin="round" filter="url(#g)">
+<circle cx="128" cy="128" r="88" stroke-width="10"/>
+<path d="M76 83L110 130Q128 150 146 130L180 83" stroke-width="10"/>
+<path d="M96 102Q78 118 78 143M160 102Q178 118 178 143" stroke-width="8"/>
+<circle cx="128" cy="128" r="22" stroke-width="8"/><circle cx="128" cy="128" r="7" fill="#b7ff00" stroke="none"/>
+</g></svg>
