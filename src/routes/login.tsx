@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { signIn } from "@/lib/auth";
 import { adminLogin } from "@/services/admin";
-import { Zap, ArrowRight, Shield, X } from "lucide-react";
+import { ArrowRight, Shield, X } from "lucide-react";
 
 export const Route = createFileRoute("/login")({ component: Login });
 
@@ -49,9 +49,8 @@ function Login() {
   return (
     <div className="min-h-screen bg-[#07080d] text-white grid place-items-center p-5">
       <div className="w-full max-w-md">
-        <Link to="/" className="mx-auto mb-8 flex w-fit items-center gap-2 font-bold">
-          <span className="grid size-9 place-items-center rounded-xl bg-white text-black"><Zap size={18} fill="currentColor"/></span>
-          HunterX
+        <Link to="/" className="mx-auto mb-8 flex w-fit items-center">
+          <img src="/hunterx-wordmark.svg" alt="HunterX" className="h-12 w-auto object-contain" />
         </Link>
 
         <form onSubmit={submit} className="rounded-3xl border border-white/8 bg-white/[.035] p-7">
