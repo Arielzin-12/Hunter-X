@@ -8,6 +8,7 @@ import { Features } from "@/components/landing/Features";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
 import { Differential } from "@/components/landing/Differential";
 import { FinalCta } from "@/components/landing/FinalCta";
+import { Pricing } from "@/components/landing/Pricing";
 import { Footer } from "@/components/landing/Footer";
 
 export const Route = createFileRoute("/")({
@@ -48,6 +49,7 @@ function LandingPage() {
         <DashboardPreview />
         <Differential />
         <FinalCta />
+        <Pricing />
       </main>
       <Footer />
     </div>
