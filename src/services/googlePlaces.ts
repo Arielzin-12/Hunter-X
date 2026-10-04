@@ -1,4 +1,8 @@
-import {supabaseConfigured,getSupabaseUrl,getSupabaseAnonKey} from "@/lib/supabase";
-const base=getSupabaseUrl();const anon=getSupabaseAnonKey();
-export type PlaceLead={google_place_id:string;name:string;address?:string;latitude?:number;longitude?:number;rating?:number;reviews_count?:number;phone?:string;website?:string;business_status?:string;types?:string[];maps_url?:string;has_website:boolean;has_phone:boolean;source:string};
-export async function searchGooglePlaces(query:string,location:string):Promise<PlaceLead[]>{if(!supabaseConfigured||!base||!anon)throw new Error("Configure o Supabase antes de pesquisar.");const r=await fetch(`${base}/functions/v1/google-places-search`,{method:"POST",headers:{apikey:anon,Authorization:`Bearer ${anon}`,"Content-Type":"application/json"},body:JSON.stringify({query,location})});const data=await r.json();if(!r.ok)throw new Error(data.error||"Não foi possível consultar o Google Places.");return data.leads||[]}
+import { getSession } from "@/lib/auth";
+import { searchPlaces } from "@/lib/places.functions";
+export type PlaceLead = Awaited<ReturnType<typeof searchPlaces>>[number];
+export async function searchGooglePlaces(query: string, location: string): Promise<PlaceLead[]> {
+  const token = getSession()?.access_token;
+  if (!token) throw new Error("Faça login para pesquisar.");
+  return searchPlaces({ data: { token, query, location } });
+}
