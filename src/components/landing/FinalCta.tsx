@@ -24,7 +24,7 @@ export function FinalCta() {
               >
                 Começar agora
                 <ArrowRight className="size-4" />
-              </a>
+              </Link>
               <p className="mt-4 text-xs text-muted-foreground">
                 Sem cartão de crédito · Configuração em minutos
               </p>
