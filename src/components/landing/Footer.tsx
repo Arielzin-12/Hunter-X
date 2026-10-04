@@ -4,6 +4,7 @@ const footerLinks = [
   { label: "Produto", href: "#produto" },
   { label: "Recursos", href: "#recursos" },
   { label: "Como funciona", href: "#como-funciona" },
+  { label: "Preços", href: "#precos" },
   { label: "Contato", href: "#" },
   { label: "Termos", href: "#" },
   { label: "Privacidade", href: "#" },
